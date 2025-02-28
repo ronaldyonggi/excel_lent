@@ -15,14 +15,15 @@ def create_sample_dataframe():
     """
 
     data = {
-        'NumericColumn1': [1, 2, 3, 4, 5],
-        'NumericColumn2': [10.5, 20.2, 30.8, 40.1, 50.6],
-        'StringColumn': ['A', 'B', 'C', 'D', 'E'],
-        'MixedColumn': [1, 'A', 2.5, 'B', 3]
+        "NumericColumn1": [1, 2, 3, 4, 5],
+        "NumericColumn2": [10.5, 20.2, 30.8, 40.1, 50.6],
+        "StringColumn": ["A", "B", "C", "D", "E"],
+        "MixedColumn": [1, "A", 2.5, "B", 3],
     }
 
     df = pd.DataFrame(data)
     return df
+
 
 def test_libreoffice_headless(soffice_path):
     """
@@ -34,7 +35,7 @@ def test_libreoffice_headless(soffice_path):
     """
     try:
         # Start LibreOffice in headless mode
-        process = subprocess.Popen([soffice_path, '--headless', '--calc'])
+        process = subprocess.Popen([soffice_path, "--headless", "--calc"])
 
         # Wait for 5 secs
         time.sleep(2)
@@ -49,10 +50,11 @@ def test_libreoffice_headless(soffice_path):
             print("LibreOffice headless test: Failed! (process exited immediately)")
 
     except FileNotFoundError:
-        print(f"LibreOffice headless test: Failed! (soffice not found)")
+        print("LibreOffice headless test: Failed! (soffice not found)")
 
     except Exception as e:
         print(f"LibreOffice headless test: Failed! (An unexpected error occurred: {e})")
+
 
 class ExcelLent:
     """
