@@ -123,5 +123,19 @@ class ExcelLent:
             print(f"An error occured: {e}")
 
         return column_sums
+
+
+if __name__ == "__main__":
     df = create_sample_dataframe()
-    print(df)
+    # print(df)
+
+    soffice_path = "/Applications/LibreOffice.app/Contents/MacOS/soffice"
+    # test_libreoffice_headless(soffice_path)
+
+    # Create an instance of the ExcelLent class
+    excel_lent = ExcelLent(soffice_path)
+
+    # Filename for the output Excel file
+    output_filename = "output"
+
+    result = excel_lent.process_dataframe(df, output_filename)
