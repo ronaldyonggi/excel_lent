@@ -63,6 +63,61 @@ class ExcelLent:
             soffice_path (str): The path to the LibreOffice Calc executable.
         """
         self.soffice_path = soffice_path
-if __name__ == '__main__':
+
+    def process_dataframe(self, df: pd.DataFrame, filename: str) -> Dict[str, float]:
+        """
+        Processes a Pandas DataFrame, creates an Excel file using LibreOffice Calc, and calculates column sums.
+
+        Args:
+            df (pd.DataFrame): The DataFrame to process.
+            filename (str): The name of the Excel file to create.
+
+        Returns:
+            dict[str, float]: A dictionary mapping column names to their sums.
+        """
+
+        # Placeholder for column sums (will implement later)
+        column_sums: Dict[str, float] = {}
+
+        try:
+            # Create temporary csv file
+            timestamp = time.strftime("%Y%m%d_%H%M%S")
+            temp_csv_filepath = Path(f"temp_{timestamp}.csv")
+            df.to_csv(temp_csv_filepath, index=False)
+
+            # Construct the command
+            output_filepath = Path(f"{filename}_{timestamp}.xlsx")
+
+            command = [
+                self.soffice_path,
+                "--headless",
+                "--convert-to",
+                "xlsx",
+                str(temp_csv_filepath),
+                "--outdir",
+                ".",
+            ]
+
+            # Execute the command via subprocess
+            process = subprocess.Popen(
+                command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
+            )
+
+            # Write csv data to stdin
+            stdout, stderr = process.communicate()
+
+            # Error handling
+            if process.returncode != 0:
+                raise Exception(f"Calc process failed with error: {stderr}")
+
+            # Clean up temporary file
+            os.remove(temp_csv_filepath)
+
+            print(f"Sucessfully created {output_filepath}")
+
+        except Exception as e:
+            print(f"An error occured: {e}")
+
+        return column_sums
     df = create_sample_dataframe()
     print(df)
