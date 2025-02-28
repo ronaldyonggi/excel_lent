@@ -49,6 +49,20 @@ def test_libreoffice_headless(soffice_path):
 
     except Exception as e:
         print(f"LibreOffice headless test: Failed! (An unexpected error occurred: {e})")
+
+class ExcelLent:
+    """
+    Processes Pandas DataFrames, creates Excel files using LibreOffice Calc, and calculates column sums.
+    """
+
+    def __init__(self, soffice_path: str):
+        """
+        Initializes the ExcelLent class.
+
+        Args:
+            soffice_path (str): The path to the LibreOffice Calc executable.
+        """
+        self.soffice_path = soffice_path
 if __name__ == '__main__':
     df = create_sample_dataframe()
     print(df)
