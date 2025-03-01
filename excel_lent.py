@@ -119,7 +119,14 @@ class ExcelLent:
             # Clean up temporary file
             os.remove(temp_csv_filepath)
 
-            print(f"Sucessfully created {output_filepath}")
+            # Calculate the sum of all numberic columns
+            for col in df.columns:
+                if pd.api.types.is_numeric_dtype(df[col]):
+                    column_sums[col] = df[col].sum()
+                    # NOTE: The sums are NumPy Types (np.int64, np.float64), which is generally
+                    # compatible with Python's int and float
+
+            print(f"Successfully created {output_filepath}")
 
         except Exception as e:
             print(f"An error occured: {e}")
