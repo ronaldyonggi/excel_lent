@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  excel-lent:
+    build: .
+    volumes:
+      - ./output:/app/output
+    environment:
+      - SOFFICE_PATH=/usr/bin/soffice
+    command: python main.py
